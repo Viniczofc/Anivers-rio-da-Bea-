@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feliz Aniversário!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,12 +14,17 @@
         }
         
         body {
-            font-family: 'Crimson Pro', serif;
-            background: linear-gradient(to bottom, #500013, #8a0026, #c3003a, #ff4d6d);
-            color: #fff;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(to bottom, #ffebee, #f8bbd0, #f48fb1, #f06292);
+            color: #880e4f;
             min-height: 100vh;
             padding: 20px;
             text-align: center;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
         }
         
         header {
@@ -27,38 +33,49 @@
             align-items: center;
             margin-bottom: 30px;
             padding: 15px;
-            background-color: rgba(80, 0, 19, 0.7);
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         
         h1 {
             font-size: 1.8rem;
             animation: pulsate 2s infinite;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .player-container {
             display: flex;
             align-items: center;
-            background: rgba(195, 0, 58, 0.3);
+            background: rgba(255, 255, 255, 0.5);
             padding: 8px 15px;
             border-radius: 50px;
             width: auto;
         }
         
-        .music-player {
+        .player-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .music-btn {
             width: 30px;
             height: 30px;
-            background-color: #ff4d6d;
+            background-color: #f06292;
             border-radius: 50%;
             border: none;
             color: white;
             cursor: pointer;
-            margin-right: 10px;
+            margin: 0 5px;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .music-btn:hover {
+            background-color: #ec407a;
+            transform: scale(1.1);
         }
         
         .song-title {
@@ -67,6 +84,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            margin-left: 10px;
         }
         
         .gallery {
@@ -83,7 +101,9 @@
             scrollbar-width: none;
             margin-bottom: 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.3);
         }
         
         .carousel::-webkit-scrollbar {
@@ -92,45 +112,31 @@
         
         .carousel-item {
             scroll-snap-align: start;
-            flex-shrink: 0;
-            width: 85%;
-            height: 250px;
-            margin-right: 15px;
-            border-radius: 15px;
-            background: rgba(195, 0, 58, 0.5);
+            flex: 0 0 calc(50% - 10px);
+            height: 180px;
+            margin: 0 5px;
+            border-radius: 10px;
+            background: rgba(236, 64, 122, 0.2);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 5rem;
-            color: rgba(255, 255, 255, 0.2);
+            font-size: 3rem;
+            color: rgba(136, 14, 79, 0.3);
+            overflow: hidden;
         }
         
-        .carousel-nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        
-        .carousel-nav button {
-            background: rgba(255, 255, 255, 0.3);
-            border: none;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-        
-        .carousel-nav button.active {
-            background: #ff4d6d;
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .text-section {
-            background-color: rgba(80, 0, 19, 0.7);
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 20px;
             border-radius: 15px;
             margin: 30px 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             text-align: left;
         }
         
@@ -147,14 +153,54 @@
         .love-text {
             font-size: 3rem;
             margin-bottom: 20px;
-            animation: colorChange 4s infinite;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(to bottom, #d81b60, #f48fb1, #d81b60);
+            background-size: 100% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientFlow 3s infinite alternate;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .heart {
             font-size: 3rem;
             animation: heartbeat 1.5s infinite;
             display: inline-block;
+            color: #d81b60;
+        }
+        
+        .counter {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .counter h2 {
+            margin-bottom: 15px;
+            color: #880e4f;
+        }
+        
+        .counter-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        
+        .counter-item {
+            padding: 10px;
+        }
+        
+        .counter-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #d81b60;
+        }
+        
+        .counter-label {
+            font-size: 0.9rem;
+            color: #880e4f;
         }
         
         /* Animações */
@@ -172,53 +218,76 @@
             60% { transform: scale(1); }
         }
         
-        @keyframes colorChange {
-            0% { color: #fff; }
-            25% { color: #ffccd5; }
-            50% { color: #ff4d6d; }
-            75% { color: #c3003a; }
-            100% { color: #fff; }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Feliz Aniversário!</h1>
-        <div class="player-container">
-            <button class="music-player">▶</button>
-            <div class="song-title">Música 1</div>
-        </div>
-    </header>
-    
-    <section class="gallery">
-        <div class="carousel">
-            <div class="carousel-item">Foto 1</div>
-            <div class="carousel-item">Foto 2</div>
-            <div class="carousel-item">Foto 3</div>
-            <div class="carousel-item">Foto 4</div>
-            <div class="carousel-item">Foto 5</div>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Feliz Aniversário!</h1>
+            <div class="player-container">
+                <div class="player-controls">
+                    <button class="music-btn" id="prev-btn">
+                        <i class="fas fa-backward"></i>
+                    </button>
+                    <button class="music-btn" id="play-btn">
+                        <i class="fas fa-play"></i>
+                    </button>
+                    <button class="music-btn" id="next-btn">
+                        <i class="fas fa-forward"></i>
+                    </button>
+                </div>
+                <div class="song-title">Música 1</div>
+            </div>
+        </header>
         
-        <div class="carousel-nav">
-            <button class="active"></button>
-            <button></button>
-            <button></button>
-        </div>
-    </section>
-    
-    <section class="text-section">
-        <p>Que seu dia seja repleto de alegria, amor e momentos tão especiais quanto você é para mim. Que este novo ano de vida traga consigo realizações, sonhos alcançados e muitas histórias para contar, assim como Anne Shirley.</p>
-        <p>Vocé é uma pessoa incrível e merece todo o amor e felicidade do mundo!</p>
-    </section>
-    
-    <section class="love-section">
-        <div class="love-text">Eu te Amo</div>
-        <div class="heart">❤️</div>
-    </section>
+        <section class="gallery">
+            <div class="carousel">
+                <div class="carousel-item">Foto 1</div>
+                <div class="carousel-item">Foto 2</div>
+                <div class="carousel-item">Foto 3</div>
+                <div class="carousel-item">Foto 4</div>
+                <div class="carousel-item">Foto 5</div>
+            </div>
+        </section>
+        
+        <section class="text-section">
+            <p>Que seu dia seja repleto de alegria, amor e momentos tão especiais quanto você é para mim. Que este novo ano de vida traga consigo realizações, sonhos alcançados e muitas histórias para contar, assim como Anne Shirley.</p>
+            <p>Você é uma pessoa incrível e merece todo o amor e felicidade do mundo!</p>
+        </section>
+        
+        <section class="love-section">
+            <div class="love-text">Eu te Amo</div>
+            <div class="heart">❤️</div>
+        </section>
+        
+        <section class="counter">
+            <h2>Desde 02/05/2025</h2>
+            <div class="counter-content">
+                <div class="counter-item">
+                    <div class="counter-value" id="days">0</div>
+                    <div class="counter-label">Dias</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="hours">0</div>
+                    <div class="counter-label">Horas</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-value" id="minutes">0</div>
+                    <div class="counter-label">Minutos</div>
+                </div>
+            </div>
+        </section>
+    </div>
     
     <script>
         // Player de música
-        const musicPlayer = document.querySelector('.music-player');
+        const playBtn = document.getElementById('play-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
         const songTitle = document.querySelector('.song-title');
         let isPlaying = false;
         
@@ -232,55 +301,82 @@
         let currentSongIndex = 0;
         const audio = new Audio();
         
-        musicPlayer.addEventListener('click', () => {
+        // Função para carregar e tocar música
+        function loadSong(index) {
+            audio.src = songs[index].src;
+            songTitle.textContent = songs[index].title;
+        }
+        
+        // Função para tocar música
+        function playSong() {
+            audio.play();
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            isPlaying = true;
+        }
+        
+        // Função para pausar música
+        function pauseSong() {
+            audio.pause();
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            isPlaying = false;
+        }
+        
+        // Event listeners para os botões do player
+        playBtn.addEventListener('click', () => {
             if (!isPlaying) {
-                audio.src = songs[currentSongIndex].src;
-                audio.play();
-                musicPlayer.textContent = "❚❚";
-                songTitle.textContent = songs[currentSongIndex].title;
-                isPlaying = true;
+                if (audio.src === "") {
+                    loadSong(currentSongIndex);
+                }
+                playSong();
             } else {
-                audio.pause();
-                musicPlayer.textContent = "▶";
-                isPlaying = false;
+                pauseSong();
+            }
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            currentSongIndex--;
+            if (currentSongIndex < 0) {
+                currentSongIndex = songs.length - 1;
+            }
+            loadSong(currentSongIndex);
+            if (isPlaying) {
+                playSong();
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+            if (isPlaying) {
+                playSong();
             }
         });
         
         audio.addEventListener('ended', () => {
             currentSongIndex = (currentSongIndex + 1) % songs.length;
-            audio.src = songs[currentSongIndex].src;
-            audio.play();
-            songTitle.textContent = songs[currentSongIndex].title;
+            loadSong(currentSongIndex);
+            playSong();
         });
         
-        // Carrossel de fotos
-        const carousel = document.querySelector('.carousel');
-        const navButtons = document.querySelectorAll('.carousel-nav button');
-        
-        navButtons.forEach((button, index) => {
-            button.addEventListener('click', () => {
-                // Atualiza botão ativo
-                navButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                
-                // Move o carrossel
-                carousel.scrollTo({
-                    left: index * (carousel.scrollWidth / navButtons.length),
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Atualiza botões conforme o scroll
-        carousel.addEventListener('scroll', () => {
-            const scrollPos = carousel.scrollLeft;
-            const index = Math.round(scrollPos / (carousel.scrollWidth / navButtons.length));
+        // Contador de tempo
+        function updateCounter() {
+            const startDate = new Date('2025-05-02T00:00:00');
+            const now = new Date();
             
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            if (index < navButtons.length) {
-                navButtons[index].classList.add('active');
-            }
-        });
+            const diff = now - startDate;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
+        
+        // Atualizar o contador a cada minuto
+        updateCounter();
+        setInterval(updateCounter, 60000);
     </script>
 </body>
 </html>
